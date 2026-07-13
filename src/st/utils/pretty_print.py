@@ -1,6 +1,8 @@
 """Utility functions for pretty printing messages to the console."""
 
 import os
+from importlib.metadata import PackageNotFoundError
+from importlib.metadata import version
 
 
 class Styles:
@@ -71,3 +73,15 @@ def print_verbose(message: str, **kwargs) -> None:
     """
     if os.getenv("VERBOSE"):
         print(message, **kwargs)  # noqa: T201
+
+
+try:
+    __version__ = version("st")
+except PackageNotFoundError:
+    __version__ = "0.0.0-unknown"
+
+
+def print_version() -> None:
+    """Print the version of the package."""
+    base_string = "ST"
+    print(f"{Styles.BOLD}{base_string}{Styles.ENDC} v{__version__}")
