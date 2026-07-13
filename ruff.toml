@@ -1,0 +1,56 @@
+# Ruff configuration for Python
+
+target-version = "py313" # Adjust with your Python version
+line-length = 88
+indent-width = 4
+
+[lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # Pyflakes
+    "I",    # isort
+    "N",    # pep8-naming
+    "D",    # pydocstyle
+    "UP",   # pyupgrade
+    "B",    # flake8-bugbear
+    "BLE",  # flake8-blind-except
+    "C4",   # flake8-comprehensions
+    "SIM",  # flake8-simplify
+    "RUF",  # Ruff-specific rules
+    "TID",  # flake8-tidy-imports
+    "T20",  # flake8-print
+]
+
+ignore = [
+    "D100", # Missing docstring in public module (often noisy)
+    "D104", # Missing docstring in public package
+    "D203", # 1 blank line required before class docstring (conflicts with D211)
+    "D213", # Multi-line docstring summary should start at the second line (conflicts with D212)
+    "D406", # Section name should end with a newline
+    "D407", # Missing dashed underline after section
+]
+
+[lint.pydocstyle]
+convention = "google"
+
+[lint.isort]
+# Imports on separate lines
+force-single-line = true
+lines-after-imports = 2
+# Add project-specific modules here if needed
+# known-first-party = ["your_package_name"]
+
+[lint.flake8-tidy-imports]
+# Use import x for packages and modules
+# This can be used to enforce specific import patterns if needed,
+# but is left empty for general compatibility.
+ban-relative-imports = "all"
+
+[format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = true
+docstring-code-line-length = "dynamic"
