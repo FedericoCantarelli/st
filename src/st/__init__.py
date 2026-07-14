@@ -1,5 +1,6 @@
 import click
 
+from st.commands.theme import theme
 from st.commands.version import version
 
 
@@ -9,6 +10,7 @@ def main():
 
 
 main.add_command(version)
+main.add_command(theme)
 
 if __name__ == "main":
     main()

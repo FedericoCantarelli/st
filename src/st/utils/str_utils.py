@@ -1,6 +1,31 @@
 import re
 
 
+def from_snake_to_camel_case(s: str) -> str:
+    """Convert a string from snake_case to camelCase.
+
+    Args:
+        s (str): The input string in snake_case.
+
+    Returns:
+        str: The string converted to camelCase.
+    """
+    parts = s.split("_")
+    return parts[0] + "".join(word.capitalize() for word in parts[1:])
+
+
+def from_camel_to_snake_case(s: str) -> str:
+    """Convert a string from camelCase to snake_case.
+
+    Args:
+        s (str): The input string in camelCase.
+
+    Returns:
+        str: The string converted to snake_case.
+    """
+    return re.sub(r"(?<!^)(?=[A-Z])", "_", s).lower()
+
+
 def to_snake_case(s: str) -> str:
     """Convert a string to snake_case.
 
