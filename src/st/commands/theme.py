@@ -106,19 +106,19 @@ def create(
 
     for element in elements:
         element.copy(
-            output_path=output_path / (name + "_" + element.theme_name),
+            output_path=output_path / (theme.file_prefix + "_" + element.theme_name),
         )
         element.load_properties_from_json()
 
         theme_element = ThemeElement(
-            tag=element.get_theme_tag("gcp"),
+            tag=element.get_theme_tag(prefix=theme.tag_prefix),
             # stroke=color
             # if color is not None
             # else config["defaults.theme"]["stroke"],
             # color=color if color is not None else config["defaults.theme"]["color"],
             stroke="#232f3d",
             color="#232f3d",
-            icon=name + "_" + element.theme_name,
+            icon=theme.file_prefix + "_" + element.theme_name,
         )
         theme.add_element(theme_element)
 
