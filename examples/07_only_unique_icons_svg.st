@@ -1,0 +1,1 @@
+EXCLUDE(NOT (CONTAIN(PATH, "Unique Icons") AND EXTENSION=".svg"))

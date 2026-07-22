@@ -1,0 +1,1 @@
+INCLUDE(CONTAIN(NAME, "rgb"))

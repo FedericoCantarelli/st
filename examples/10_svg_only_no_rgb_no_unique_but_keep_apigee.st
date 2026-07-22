@@ -1,0 +1,2 @@
+INCLUDE(NAME="Apigee*" AND EXTENSION=".svg")
+EXCLUDE((NOT EXTENSION=".svg") OR CONTAIN(PATH, "Unique Icons") OR CONTAIN(NAME, "rgb"))

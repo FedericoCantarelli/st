@@ -1,0 +1,2 @@
+EXCLUDE(NAME="*")
+INCLUDE(EXTENSION=".png")

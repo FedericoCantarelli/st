@@ -1,0 +1,21 @@
+[
+  {
+    "label": "Debug st CLI",
+    // The debug adapter that Zed should use to debug the program
+    "adapter": "Debugpy",
+    "request": "launch",
+    // Use the project's uv-managed virtualenv, where `st` is installed in
+    // editable mode. Without this, the adapter falls back to whatever
+    // interpreter it finds on PATH (e.g. pyenv), which won't have `st`.
+    "python": "$ZED_WORKTREE_ROOT/.venv/bin/python",
+    // The program to debug. This field supports path resolution with ~ or . symbols.
+    "program": "__init__.py",
+    // Edit these to exercise whichever subcommand you're debugging,
+    // e.g. ["theme", "create", "/path/to/icons", "--name", "My Theme"]
+    "args": ["theme", "create", "/Users/federico.cantarelli/Code/st/cleaned/", "--name", "GCP"],
+    // cwd: defaults to the current working directory of your project ($ZED_WORKTREE_ROOT)
+    "cwd": "$ZED_WORKTREE_ROOT/src/st",
+    "console": "integratedTerminal",
+    "justMyCode": true
+  }
+]

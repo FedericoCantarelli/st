@@ -1,4 +1,5 @@
 import json
+import os
 import pathlib
 import shutil
 from typing import Any
@@ -20,14 +21,14 @@ class IconElement:
     the icons found.
     """
 
-    def __init__(self, path: pathlib.Path):
+    def __init__(self, path: pathlib.Path, include_top_parent_directory: bool = True):
         """Initialize a IconElement instance."""
         self.path = path
+        self._include_top_parent_directory = include_top_parent_directory
         self.top_parent_directory = (
-            pathlib.Path(to_snake_case(path.parts[1]))
-            if len(path.parts) > 2
-            else None
+            pathlib.Path(to_snake_case(path.parts[1])) if len(path.parts) > 2 else None
         )
+
         self.metadata: dict[str, Any] = {}
 
     @property
@@ -58,27 +59,31 @@ class IconElement:
         return self.path.suffix
 
     @property
-    def _output_file_path(self) -> pathlib.Path:
+    def cleaned_file_name(self) -> str:
         """Get the output file path for the icon element.
 
         Returns:
-            pathlib.Path: The output file path for the icon element.
+            str: The output file path for the icon element.
         """
-        if self.top_parent_directory is not None:
-            return self.top_parent_directory / (
-                to_snake_case(self.name) + self.extension
+        if (
+            self.top_parent_directory is not None
+        ) and self._include_top_parent_directory:
+            return (
+                self.top_parent_directory.name
+                + "_"
+                + to_snake_case(self.name)
+                + self.extension
             )
         else:
-            return pathlib.Path(self.name + self.extension)
+            return to_snake_case(self.name) + self.extension
 
-    def get_theme_name(self, prefix: str | None = None) -> str:
+    @property
+    def theme_name(self) -> str:
         theme_name = self.path.parent.parts[-1].split("_")[0].lower() + "_" + self.name
-        if prefix is not None:
-            theme_name = prefix.lower() + "_" + theme_name
-        return theme_name
+        return theme_name + self.extension
 
     def get_theme_tag(self, prefix: str | None = None) -> str:
-        theme_name = self.get_theme_name().split(".")[0]
+        theme_name = self.theme_name.split(".")[0]
         tag_name = (
             theme_name.split("_")[0].capitalize()
             + " - "
@@ -119,9 +124,9 @@ class IconElement:
         """
         shutil.copyfile(
             self.path,
-            output_path / self._output_file_path,
+            output_path,
         )
-        print_ok("Processed " + self.name)
+        print_ok("Processed " + self.full_name)
 
     def __str__(self) -> str:
         """Return a string representation of the IconElement instance.
@@ -272,3 +277,29 @@ class Theme:
 
         with open(path, "w") as f:
             json.dump(json_dict, f, indent=4)
+
+
+def go_through_fs_tree(
+    full_path: pathlib.Path,
+    include_top_parent_directory: bool,
+) -> list[IconElement]:
+    element_list = []
+    for item in os.listdir(full_path):
+        item_path = pathlib.Path(full_path) / item
+        if os.path.isfile(item_path):
+            if item.startswith("."):
+                print_verbose(
+                    f"Skipping hidden file: {'/'.join(str(item_path).split('/')[-3:])}"
+                )
+                continue
+            element_list.append(IconElement(item_path, include_top_parent_directory))
+
+        elif os.path.isdir(item_path):
+            element_list.extend(
+                go_through_fs_tree(
+                    full_path=item_path,
+                    include_top_parent_directory=include_top_parent_directory,
+                )
+            )
+
+    return element_list

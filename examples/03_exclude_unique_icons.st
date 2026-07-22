@@ -1,0 +1,1 @@
+EXCLUDE(CONTAIN(PATH, "Unique Icons"))

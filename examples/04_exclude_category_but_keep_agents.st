@@ -1,0 +1,2 @@
+INCLUDE(CONTAIN(PATH, "Agents") AND EXTENSION=".svg")
+EXCLUDE(CONTAIN(PATH, "Category Icons"))

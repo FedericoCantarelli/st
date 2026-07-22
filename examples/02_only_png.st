@@ -1,0 +1,1 @@
+EXCLUDE(EXTENSION=".svg")
