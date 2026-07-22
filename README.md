@@ -1,6 +1,8 @@
 # Structurizr Theme Creator
 A very stupid CLI to create Structurizr themes starting from icons.
 
+<p class="callout warning"><b>This is super work in progress. Will be completed soon.</b></p>
+
 ## Naming Convention of Exported Icon
 This section describes the naming convention for the exported icons. The naming convention depends also on the directory structure of the icons. Indeed, the exported icons name will also depend on first level nested directories inside the input directory. 
 Given the following project structure:
