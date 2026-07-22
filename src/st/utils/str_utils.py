@@ -26,7 +26,7 @@ def from_camel_to_snake_case(s: str) -> str:
     return re.sub(r"(?<!^)(?=[A-Z])", "_", s).lower()
 
 
-def to_snake_case(s: str) -> str:
+def to_clean_string(s: str) -> str:
     """Convert a string to snake_case.
 
     Args:

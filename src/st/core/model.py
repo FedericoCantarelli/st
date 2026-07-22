@@ -10,7 +10,7 @@ from st.utils.pretty_print import print_ok
 from st.utils.pretty_print import print_verbose
 from st.utils.pretty_print import print_warning
 from st.utils.str_utils import from_snake_to_camel_case
-from st.utils.str_utils import to_snake_case
+from st.utils.str_utils import to_clean_string
 
 
 class IconElement:
@@ -26,7 +26,9 @@ class IconElement:
         self.path = path
         self._include_top_parent_directory = include_top_parent_directory
         self.top_parent_directory = (
-            pathlib.Path(to_snake_case(path.parts[1])) if len(path.parts) > 2 else None
+            pathlib.Path(to_clean_string(path.parts[1]))
+            if len(path.parts) > 2
+            else None
         )
 
         self.metadata: dict[str, Any] = {}
@@ -71,11 +73,11 @@ class IconElement:
             return (
                 self.top_parent_directory.name
                 + "_"
-                + to_snake_case(self.name)
+                + to_clean_string(self.name)
                 + self.extension
             )
         else:
-            return to_snake_case(self.name) + self.extension
+            return to_clean_string(self.name) + self.extension
 
     @property
     def theme_name(self) -> str:
@@ -246,12 +248,12 @@ def get_tag_theme_prefix(theme_name: str) -> str:
         str: The prefix for the theme.
     """
     eligible_words = [
-        to_snake_case(word) for word in theme_name.split() if len(word) > 2
+        to_clean_string(word) for word in theme_name.split() if len(word) > 2
     ]
     prefix = (
         "".join([word[0].lower() for word in eligible_words])
         if len(eligible_words) > 2
-        else to_snake_case(theme_name)
+        else to_clean_string(theme_name)
     )
     return prefix
 
@@ -269,12 +271,12 @@ def get_file_theme_prefix(theme_name: str) -> str:
         str: The prefix for the theme.
     """
     eligible_words = [
-        to_snake_case(word) for word in theme_name.split() if len(word) > 2
+        to_clean_string(word) for word in theme_name.split() if len(word) > 2
     ]
     prefix = (
         "".join([word[0].lower() for word in eligible_words])
         if len(eligible_words) > 2
-        else to_snake_case(theme_name)
+        else to_clean_string(theme_name)
     )
     return prefix
 

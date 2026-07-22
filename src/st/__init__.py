@@ -1,6 +1,5 @@
 import click
 
-from st.commands.theme import create
 from st.commands.theme import theme
 from st.commands.version import version
 

@@ -32,4 +32,4 @@ dependencies = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "click", specifier = ">=8.4.2" }]
+requires-dist = [{ name = "click", specifier = ">=8.4.2,<9.0.0" }]

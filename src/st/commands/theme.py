@@ -14,7 +14,7 @@ from st.utils.config import load_config
 from st.utils.pretty_print import print_done
 from st.utils.pretty_print import print_verbose
 from st.utils.pretty_print import print_warning
-from st.utils.str_utils import to_snake_case
+from st.utils.str_utils import to_clean_string
 
 
 @click.group()
@@ -39,7 +39,7 @@ def clean(path, output, rules):
     if not output_path.exists():
         output_path.mkdir(parents=True, exist_ok=True)
     first_level = [item for item in os.listdir(full_path) if not item.startswith(".")]
-    first_level_dict = {item: to_snake_case(item) for item in first_level}
+    first_level_dict = {item: to_clean_string(item) for item in first_level}
     for item in first_level_dict.values():
         if item.startswith("."):
             print_verbose(f"Skipping hidden directory: {item}")
@@ -66,8 +66,6 @@ def clean(path, output, rules):
 @click.argument("path", type=click.Path(exists=True))
 @click.option("--name", type=str, required=True)
 @click.option("--description", type=str, required=False, default=None)
-@click.option("--color", type=str, required=False, default=None)
-@click.option("--add", type=click.Path(exists=True), required=False)
 @click.option(
     "--rules",
     type=click.Path(exists=True, dir_okay=False),
@@ -75,9 +73,7 @@ def clean(path, output, rules):
     default=None,
     help="Path to a rules file (e.g. rules.st) filtering which icons to process.",
 )
-def create(
-    path, name: str, description: str | None, color: str, add: str, rules: str
-) -> None:
+def create(path, name: str, description: str | None, rules: str) -> None:
     if not CONFIG_FILE.exists():
         print_warning("Configuration file not found. Creating one with default values.")
         init_config(config_path=CONFIG_FILE)
