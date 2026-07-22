@@ -116,8 +116,8 @@ def create(
             # if color is not None
             # else config["defaults.theme"]["stroke"],
             # color=color if color is not None else config["defaults.theme"]["color"],
-            stroke="#FF0000",
-            color="#00FF00",
+            stroke="#232f3d",
+            color="#232f3d",
             icon=name + "_" + element.theme_name,
         )
         theme.add_element(theme_element)
